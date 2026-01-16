@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.dto.CategoryDto;
 import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.services.exceptions.EntityNotFoundException;
+
 
 @Service
 public class CategoryService {
@@ -50,4 +50,19 @@ public class CategoryService {
 		entity = repository.save(entity);
 		return new CategoryDto(entity);
 	}
+
+	@Transactional
+	public CategoryDto update(Long id, CategoryDto dto) {
+		try {
+			Category entity = repository.getReferenceById(id);
+			entity.setName(dto.getName());
+			entity = repository.save(entity);
+			return new CategoryDto(entity);
+		}catch (jakarta.persistence.EntityNotFoundException e) {
+			throw new EntityNotFoundException("Id nao encontrado");
+		}
+		
+	}
+
+	
 }
