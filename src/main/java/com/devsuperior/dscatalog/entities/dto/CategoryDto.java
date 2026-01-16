@@ -7,6 +7,10 @@ public class CategoryDto {
 	private long id;
 	private String name;
 	
+	public CategoryDto() {
+		
+	}
+	
 	public CategoryDto(long id, String name) {
 		super();
 		this.id = id;
